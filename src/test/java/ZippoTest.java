@@ -64,11 +64,68 @@ public class ZippoTest {
                 .then()
                 .log().body()
                 .statusCode(200)
-                .body("country", equalTo("United States")) //assertion body nin country degeri United States mi
-
-
+                .body("country", equalTo("United States")) //assertion body nin country degeri United States mi?
 
         ;
     }
+
+    // Soru : "http://api.zippopotam.us/us/90210"  endpoint indne dönen
+    // place dizisinin ilk elemanının state değerinin  "California"
+    // olduğunu doğrulayınız
+
+    @Test
+    public void test4() {
+        given()
+
+                .when()
+                .get("http://api.zippopotam.us/us/90210")
+
+
+                .then()
+                .log().body()
+                .statusCode(200)
+                .body("places[0].state", equalTo("California"))
+
+        ;
+    }
+
+
+    // Soru : "http://api.zippopotam.us/tr/01000"  endpoint in dönen
+    // place dizisinin herhangi bir elemanında  "Dörtağaç Köyü" değerinin
+    // olduğunu doğrulayınız
+    @Test
+    public void checkHasItem(){
+        given()
+
+                .when()
+                .get("http://api.zippopotam.us/tr/01000")
+
+
+                .then()
+                .log().body()
+                .statusCode(200)
+                .body("places.'place name'",hasItem("Dörtağaç Köyü"))
+        ;
+    }
+
+    // Soru : "http://api.zippopotam.us/us/90210"  endpoint in dönen
+    // place dizisinin dizi uzunluğunun 1 olduğunu doğrulayınız.
+
+    @Test
+    public void BodyHasSize(){
+
+        given()
+
+                .when()
+                .get("http://api.zippopotam.us/us/90210")
+                .then()
+                .log().body()
+                .statusCode(200)
+                .body("places", hasSize(1))
+
+        ;
+    }
+
+
 
 }
